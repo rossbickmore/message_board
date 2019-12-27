@@ -1,0 +1,49 @@
+{
+  "posts": [
+    { 
+      "id": 1,
+      "title": "json-server", 
+      "content": "this is a test message",
+      "user": {
+        "comments": [
+          {
+            "content": "nice post",
+            "id": 1
+          }
+        ],
+        "username": "lenny",
+        "id": 1
+      }     
+    },
+    { 
+      "id": 2,
+      "title": "i heart music", 
+      "content": "this is a great post",
+      "user": {
+        "comments": [
+          {
+            "content": "nice post",
+            "id": 2
+          }
+        ],
+        "username": "lenny",
+        "id": 1
+      }     
+    },
+    { 
+      "id": 3,
+      "title": "i heart ian thompson", 
+      "content": "this is a bad post",
+      "user": {
+        "comments": [
+          {
+            "content": "awful poost",
+            "id": 4
+          }
+        ],
+        "username": "jonny",
+        "id": 2
+      }     
+    }
+  ]
+}
