@@ -1,8 +1,8 @@
 {
   "posts": [
-    { 
+    {
       "id": 1,
-      "title": "json-server", 
+      "title": "json-server",
       "content": "this is a test message",
       "user": {
         "comments": [
@@ -13,11 +13,11 @@
         ],
         "username": "lenny",
         "id": 1
-      }     
+      }
     },
-    { 
+    {
       "id": 2,
-      "title": "i heart music", 
+      "title": "i heart music",
       "content": "this is a great post",
       "user": {
         "comments": [
@@ -28,11 +28,11 @@
         ],
         "username": "lenny",
         "id": 1
-      }     
+      }
     },
-    { 
+    {
       "id": 3,
-      "title": "i heart ian thompson", 
+      "title": "i heart ian thompson",
       "content": "this is a bad post",
       "user": {
         "comments": [
@@ -43,7 +43,12 @@
         ],
         "username": "jonny",
         "id": 2
-      }     
+      }
+    },
+    {
+      "title": "test",
+      "content": "123",
+      "id": 4
     }
   ]
 }
