@@ -1,20 +1,65 @@
 import React, {useState, useEffect} from 'react';
+import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
+import PostForm from './components/PostForm'
+import Post from './components/Post'
+import postService from './services/posts'
+import loginService from './services/login'
+import LoginForm from './components/LoginForm'
 
 function App() {
   const [posts, setPosts] = useState([])
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
   const [comment, setComment] = useState("")
-  const [expand, setExpand] = useState(true)
-  const baseUrl = "http://localhost:3000/posts"
+  const [comments, setComments] = useState([])
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [username, setUsername] = useState('') 
+  const [password, setPassword] = useState('') 
+  const [user, setUser] = useState(null)
   
-  useEffect( () => {
-    const getPosts = async () => {
-      const response = await fetch(baseUrl)
-      return response.json()
-    }
-    getPosts().then( data => setPosts(data))
+  useEffect(() => {
+    postService.getAll()
+    .then( data => setPosts(data))
   })
+
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedPostappUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+      postService.setToken(user.token)
+    }
+  }, [])
+
+  const handleLogin = async (event) => {
+    event.preventDefault()
+    try {
+      const user = await loginService.login({
+        username, password,
+      })
+      window.localStorage.setItem(
+        'loggedPostappUser', JSON.stringify(user)
+      )       
+      postService.setToken(user.token)
+      setUser(user)
+      setUsername('')
+      setPassword('')
+    } catch (exception) {
+      setErrorMessage('Wrong credentials')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
+
+  const handleLogout = (event) => {
+    event.preventDefault()
+    setUser(null)
+    window.localStorage.clear()
+    setUsername('')
+    setPassword('')
+  }
+
 
   const addPost = e => {
     e.preventDefault()
@@ -23,17 +68,9 @@ function App() {
       content: content,
       id: posts.length + 1
     }
-    const create = async (object) => {
-      const options = {
-        method: "POST",
-        headers: {'Content-Type': 'application/json;charset=utf-8'},
-        body: JSON.stringify(object)
-      }
-      const response = await fetch(baseUrl, options)
-      console.log(response)
-    }
-    create(newPost)
-    setPosts(posts.concat(newPost))
+    postService.create(newPost).then( data => setPosts(posts.concat(data)))
+    setTitle('')
+    setContent('')
   }
 
   const addComment = (e, id) => {
@@ -41,64 +78,70 @@ function App() {
     const newComment = {
       content: comment,
     }
-    const create = async (object, id) => {
-      const options = {
-        method: "POST",
-        headers: {'Content-Type': 'application/json;charset=utf-8'},
-        body: JSON.stringify(object)
-      }
-      const response = await fetch(`${baseUrl}/${id}/comments`, options)
-      console.log(response)
-    }
-    create(newComment,id)
+    postService.createComment(newComment, id).then( data => setComments(comments.concat(data)))
     const postToAddCommentTo = posts.find( post => post.id === id )
     postToAddCommentTo.comments.concat(newComment)
     setComment("")
   }
 
+  const loginForm = () => (
+    <LoginForm
+      username={username}
+      password={password}
+      handleUsernameChange={({ target }) => setUsername(target.value)}
+      handlePasswordChange={({ target }) => setPassword(target.value)}
+      handleSubmit={handleLogin}
+    />
+  )
+
   return (
     <div>
-      <h1>Message Board</h1>
-      <div class="PostForm">
-        <form onSubmit={addPost}>
-        <div>
-          Title
-          <input value={title} onChange={ ({target}) => setTitle(target.value)}/>
-        </div>
-        <div>
-          Content
-          <input value={content} onChange={ ({target}) => setContent(target.value)}/>
-        </div>
-        <button type="submit">Create post</button>
-        </form>
-      </div>
-      <div class="PostBoard">
-        { posts && posts.map( post => (
-          <div class="Post" key={post.id}>
-            <h4 onClick={() => setExpand(!expand)}>{post.title}</h4>
-            { !expand &&
-            <div>
-              <p>{post.content}</p>
-              <div class="CommentBoard">
-              <h5>Comments</h5>
-              { post.comments.map( comment => (
-                <p>{comment.content}</p>
-              ))}
-              <div class="CommentForm">
-                <form onSubmit={(e) => addComment(e, post.id)}>
-                  leave a comment
-                <div>
-                  <input type="text" value={comment} onChange={ ({target}) => setComment(target.value)}/>
-                </div>
-                  <button type="submit">Submit</button>
-                </form>
-              </div>
-            </div>
-            </div>
-            }
+    <Router>
+      <div>
+        {!user && 
+          <div>
+              <Link to="/posts">Posts</Link>
+              <Link to="/login">Login</Link>
+              <Link to="/signup">SignUp</Link>
           </div>
-        ))}
+        }
+        {user &&
+          <div>
+            <Link to="/posts">Posts</Link>
+            <Link onClick={handleLogout}>Logout</Link>
+          </div>
+        }
       </div>
+      <Route path="/posts" render={() => 
+        <div>
+          <div>
+            <h1>Message Board</h1>
+            <PostForm 
+            title={title} 
+            content={content} 
+            onTitleChange={({target}) => setTitle(target.value)}
+            onContentChange={({target}) => setContent(target.value)}
+            addPost={addPost}
+            />
+          </div>
+          <div class="PostBoard">
+            { posts && posts.map( post => (
+            <Post 
+            {...post} 
+            key={post.id} 
+            comment={comment}
+            addComment={addComment}
+            handleCommentChange={({target}) => setComment(target.value)}
+            />
+            ))}
+          </div>
+        </div>
+      }/>
+      <Route path="/login" render={() =>
+        user ? <Redirect to="/"/> : loginForm()}
+      />
+    </Router>
+      
     </div>
   );
 }

@@ -41,13 +41,11 @@ postsRouter.post('/', async (request, response, next) => {
     const user = await User.findById(decodedToken.id)
     const post = new Post({
       title: body.title,
-      author: body.author,
       content: body.content,
-      important: body.important || false,
       date: new Date(),
       user: user._id
     })
-    const savedPost = await Post.save()
+    const savedPost = await post.save()
     user.posts = user.posts.concat(savedPost._id)
     await user.save() 
   } catch (exception) {
@@ -104,7 +102,7 @@ postsRouter.post('/:id/comments', async (request, response, next) => {
     console.log(post)
     console.log(user)
     const comment = new Comment({
-      comment: body.comment,
+      content: body.content,
       date: new Date(),
       user: user._id,
       post: post._id
