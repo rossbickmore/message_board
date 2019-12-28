@@ -5,6 +5,7 @@ function App() {
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
   const [comment, setComment] = useState("")
+  const [expand, setExpand] = useState(true)
   const baseUrl = "http://localhost:3000/posts"
   
   useEffect( () => {
@@ -73,24 +74,28 @@ function App() {
       </div>
       <div class="PostBoard">
         { posts && posts.map( post => (
-          <div class="Post">
-            <h4>{post.title}</h4>
-            <p>{post.content}</p>
-            <div class="CommentBoard">
-            <h5>Comments</h5>
-            { post.comments.map( comment => (
-              <p>{comment.content}</p>
-            ))}
-            <div class="CommentForm">
-              <form onSubmit={(e) => addComment(e, post.id)}>
-                leave a comment
-              <div>
-                <input type="text" value={comment} onChange={ ({target}) => setComment(target.value)}/>
+          <div class="Post" key={post.id}>
+            <h4 onClick={() => setExpand(!expand)}>{post.title}</h4>
+            { !expand &&
+            <div>
+              <p>{post.content}</p>
+              <div class="CommentBoard">
+              <h5>Comments</h5>
+              { post.comments.map( comment => (
+                <p>{comment.content}</p>
+              ))}
+              <div class="CommentForm">
+                <form onSubmit={(e) => addComment(e, post.id)}>
+                  leave a comment
+                <div>
+                  <input type="text" value={comment} onChange={ ({target}) => setComment(target.value)}/>
+                </div>
+                  <button type="submit">Submit</button>
+                </form>
               </div>
-                <button type="submit">Submit</button>
-              </form>
             </div>
             </div>
+            }
           </div>
         ))}
       </div>
