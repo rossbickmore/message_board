@@ -1,13 +1,14 @@
 import React from 'react';
+import Form from '../components/styles/Form'
 
 const CommentForm = ({blogId, addComment, handleCommentChange, comment}) => (
-  <form onSubmit={(e) => addComment(e, blogId)}>
+  <Form onSubmit={(e) => addComment(e, blogId)}>
   leave a comment
   <div>
     <input type="text" value={comment} onChange={handleCommentChange}/>
   </div>
   <button type="submit">Submit</button>
-  </form>
+  </Form>
 );
 
 export default CommentForm;

@@ -1,4 +1,5 @@
 import React from 'react'
+import Form from '../components/styles/Form'
 
 const LoginForm = ({
   handleSubmit,
@@ -9,18 +10,16 @@ const LoginForm = ({
  }) => {
  return (
    <div>
-     <h2>Login</h2>
-
-     <form onSubmit={handleSubmit}>
+     <Form onSubmit={handleSubmit}>
        <div>
-         username
+         Username
          <input
            value={username}
            onChange={handleUsernameChange}
          />
        </div>
        <div>
-         password
+         Password
          <input
            type="password"
            value={password}
@@ -28,7 +27,7 @@ const LoginForm = ({
          />
      </div>
        <button type="submit">login</button>
-     </form>
+     </Form>
    </div>
  )
 }
