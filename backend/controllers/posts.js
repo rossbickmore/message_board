@@ -6,7 +6,15 @@ const jwt = require('jsonwebtoken')
 
 
 postsRouter.get('/', async (request, response) => {
-  const posts = await Post.find({}).populate('user').populate('comments')
+  const posts = await Post.find({})
+    .populate('user')
+    .populate({
+      path: 'comments',			
+      populate: { 
+        path:  'user',
+        select: 'username' 
+      }})
+    
   response.json(posts.map(post => post.toJSON()))
 })
 
@@ -43,7 +51,7 @@ postsRouter.post('/', async (request, response, next) => {
       title: body.title,
       content: body.content,
       date: new Date(),
-      user: user._id
+      user: user._id,
     })
     const savedPost = await post.save()
     user.posts = user.posts.concat(savedPost._id)
@@ -53,24 +61,8 @@ postsRouter.post('/', async (request, response, next) => {
   }
 })
 
-
-
-postsRouter.delete('/:id', (request, response, next) => {
-  Post.findByIdAndRemove(request.params.id)
-    .then(() => {
-      response.status(204).end()
-    })
-    .catch(error => next(error))
-})
-
 postsRouter.put('/:id', async (request, response, next) => {
   const body = request.body
-  const post = {
-    title: body.title,
-    content: body.content,
-    date: body.date,
-    likes: body.likes
-  }
   const token = getTokenFrom(request)
   try {
     const decodedToken = jwt.verify(token, process.env.SECRET)
@@ -78,6 +70,13 @@ postsRouter.put('/:id', async (request, response, next) => {
       return response.status(401).json({ error: 'token missing or invalid' })
     }
     const user = await User.findById(decodedToken.id)
+    const post = {
+      title: body.title,
+      content: body.content,
+      date: body.date,
+      user: user._id,
+      likes: body.likes
+    }
     const postToUpdate = await Post.findByIdAndUpdate(request.params.id, post, { new: true })
     const savedPost = await postToUpdate.save()
     user.posts = user.posts.concat(savedPost._id)
@@ -87,6 +86,7 @@ postsRouter.put('/:id', async (request, response, next) => {
     next(exception)
   }
 })
+
 //comments
 
 postsRouter.post('/:id/comments', async (request, response, next) => {

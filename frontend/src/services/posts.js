@@ -31,20 +31,12 @@ const update = async (id, newObject) => {
     body: JSON.stringify(newObject)
   }
   const response = await fetch(`${ baseUrl }/${id}`,config)
-  console.log(response)
   const result = await response.json()
   return result
-  
 }
 
-const destroy = async id => {
-  const config = {
-    method: 'DELETE',
-  }
-  await fetch(`${ baseUrl }/${id}`, config)
-}
 
-const createComment = async (newObject, id) => {
+const createComment = async (id, newObject) => {
   const config = {
     method: 'POST',
     headers: { Authorization: token, 'Content-Type': 'application/json;charset=utf-8'},
@@ -57,4 +49,4 @@ const createComment = async (newObject, id) => {
   return result
 }
 
-export default { getAll, create, destroy, update, createComment, setToken } 
+export default { getAll, create, update, createComment, setToken } 

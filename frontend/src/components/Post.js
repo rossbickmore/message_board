@@ -19,8 +19,7 @@ const ContentContainer = styled.div`
    align-items: space-around;
 `
 
-const Post = ({title, content, comments, id, comment, user, date, currentUser, addComment, handleCommentChange}) => {
-  console.log(user)
+const Post = ({title, content, likes, addLike, comments, id, comment, user, date, currentUser, addComment, handleCommentChange}) => {
 
   return (
     <Card>
@@ -37,6 +36,8 @@ const Post = ({title, content, comments, id, comment, user, date, currentUser, a
           <p>{content}</p>
         </ContentContainer>
         <hr></hr>
+        <h2>{likes} Likes </h2>
+        <button onClick={() => addLike(id)}>Add like</button>
         <ContentContainer>
           <h2>Comments</h2>
           { comments.map( comment => (
@@ -52,7 +53,7 @@ const Post = ({title, content, comments, id, comment, user, date, currentUser, a
         addComment={addComment}
         handleCommentChange={handleCommentChange}
         comment={comment}
-        blogId={id}
+        postId={id}
         />
         }
         { !currentUser && <a style={{color: "grey"}} href="/login">Login to leave a comment</a> }

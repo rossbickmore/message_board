@@ -14,7 +14,10 @@ const postSchema = new mongoose.Schema({
       ref: 'Comment'
     }
   ],
-  likes: 0
+  likes: {
+    type: Number,
+    default: 0
+  }
 })
 
 

@@ -39,7 +39,6 @@ function App() {
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
   const [comment, setComment] = useState("")
-  const [comments, setComments] = useState([])
   const [errorMessage, setErrorMessage] = useState(null)
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('') 
@@ -108,10 +107,29 @@ function App() {
     const newComment = {
       content: comment,
     }
-    postService.createComment(newComment, id).then( data => setComments(comments.concat(data)))
+    postService.createComment(id, newComment)
     const postToAddCommentTo = posts.find( post => post.id === id )
     postToAddCommentTo.comments.concat(newComment)
     setComment("")
+  }
+
+  const addLike = (id) => {
+    const post = posts.find(post => post.id === id)
+    const changedPost = { ...post, likes: post.likes + 1 }
+    postService
+      .update(id, changedPost)
+      .then(returnedpost => {
+        setPosts(posts.map(post => post.id !== id ? post : returnedpost))
+      })
+      .catch(error => {
+        setErrorMessage(
+          `post '${post.content}' was already  from server`
+        )
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+        setPosts(posts.filter(n => post.id !== id))
+      })
   }
 
   const loginForm = () => (
@@ -161,11 +179,18 @@ function App() {
             addPost={addPost}
             />
             }
+            <div class="Filter">
+              <button>Sort by new</button>
+              <button>Sort by old</button>
+              <button>Sort by likes</button>
+              <button>Sort by most comments</button>
+            </div>
           </div>
           <div class="PostBoard">
             { posts && posts.map( post => (
             <Post 
             {...post} 
+            addLike={addLike}
             key={post.id} 
             currentUser={user}
             comment={comment}
