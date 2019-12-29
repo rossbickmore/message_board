@@ -7,7 +7,7 @@ const postsRouter = require('./controllers/posts')
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
 const middleware = require('./utils/middleware')
-const mongoose = require('mongoose')
+const mongoose = require(config.DB,{ useMongoClient:true })
 const logger = require('./utils/logger')
 
 logger.info('connecting to', config.MONGODB_URI)
