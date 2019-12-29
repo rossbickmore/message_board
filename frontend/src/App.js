@@ -118,8 +118,9 @@ function App() {
     const changedPost = { ...post, likes: post.likes + 1 }
     postService
       .update(id, changedPost)
-      .then(returnedpost => {
-        setPosts(posts.map(post => post.id !== id ? post : returnedpost))
+      .then(returnedPost => {
+        returnedPost.comments = post.comments
+        setPosts(posts.map(post => post.id !== id ? post : returnedPost))
       })
       .catch(error => {
         setErrorMessage(
@@ -128,7 +129,7 @@ function App() {
         setTimeout(() => {
           setErrorMessage(null)
         }, 5000)
-        setPosts(posts.filter(n => post.id !== id))
+        setPosts(posts.filter(post => post.id !== id))
       })
   }
 

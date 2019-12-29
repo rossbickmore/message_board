@@ -71,10 +71,6 @@ postsRouter.put('/:id', async (request, response, next) => {
     }
     const user = await User.findById(decodedToken.id)
     const post = {
-      title: body.title,
-      content: body.content,
-      date: body.date,
-      user: user._id,
       likes: body.likes
     }
     const postToUpdate = await Post.findByIdAndUpdate(request.params.id, post, { new: true })

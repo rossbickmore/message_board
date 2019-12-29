@@ -32,6 +32,7 @@ const update = async (id, newObject) => {
   }
   const response = await fetch(`${ baseUrl }/${id}`,config)
   const result = await response.json()
+  console.log(result, "result")
   return result
 }
 
