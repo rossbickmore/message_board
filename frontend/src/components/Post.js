@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Comment from './Comment'
 import CommentForm from './CommentForm'
 import Card from '../components/styles/Card'
 import styled from 'styled-components'
 import { formatDate } from '../utils/dateFunctions'
+import { FaThumbsUp, FaCommentAlt, FaComment } from 'react-icons/fa';
 
 const Title = styled.div`
   cursor: pointer;
@@ -19,8 +20,16 @@ const ContentContainer = styled.div`
    align-items: space-around;
 `
 
-const Post = ({title, content, likes, addLike, comments, id, comment, user, date, currentUser, addComment, handleCommentChange}) => {
+const ButtonContainer = styled.div`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  color: ${props => props.theme.red}
+`
 
+const Post = ({title, content, likes, addLike, comments, id, comment, user, date, currentUser, addComment, handleCommentChange}) => {
+  const [expand, setExpand] = useState(false)
   return (
     <Card>
       <Title>
@@ -31,34 +40,35 @@ const Post = ({title, content, likes, addLike, comments, id, comment, user, date
       </div>
       </Title>
       <hr></hr>
-      <div>
-        <ContentContainer>
-          <p>{content}</p>
-        </ContentContainer>
-        <hr></hr>
+      <ContentContainer>
+        <p>{content}</p>
+      </ContentContainer>
+      <hr></hr>
         <h2>{likes} Likes </h2>
-        <button onClick={() => addLike(id)}>Add like</button>
-        <ContentContainer>
-          <h2>Comments</h2>
-          { comments.map( comment => (
-            <Comment 
-            key={comment.id}
-            content={comment.content}
-            user={comment.user.username}
-            date={comment.date}
-            />
-          ))}
-        { currentUser && 
+      { currentUser &&
+        <ButtonContainer>
+          <p onClick={() => addLike(id)}>Like <FaThumbsUp/></p>
+          <p onClick={() => setExpand(true)}>Leave a comment <FaCommentAlt/></p>
+        </ButtonContainer>
+      }
+        { expand && currentUser && comments.map( comment => (
+          <Comment 
+          key={comment.id}
+          content={comment.content}
+          user={comment.user.username}
+          date={comment.date}
+          />
+        ))
+        }
+      { expand && currentUser && 
         <CommentForm 
         addComment={addComment}
         handleCommentChange={handleCommentChange}
         comment={comment}
         postId={id}
         />
-        }
-        { !currentUser && <a style={{color: "grey"}} href="/login">Login to leave a comment</a> }
-        </ContentContainer>
-      </div>
+      }
+      { !currentUser && <a style={{color: "grey"}} href="/login">Login to leave a comment</a> }
     </Card>
   )
 };
