@@ -60,7 +60,7 @@ function App() {
   const [password, setPassword] = useState('') 
   const [user, setUser] = useState(null)
   const [expandForm, setExpandForm] = useState(false)
-  const [sortDate, setSortDate] = useState(false)
+  const [sortDate, setSortDate] = useState(true)
   const [sortLikes, setSortLikes] = useState(false)
   const [sortComments, setSortComments] = useState(false)
   

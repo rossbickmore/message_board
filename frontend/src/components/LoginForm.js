@@ -3,10 +3,8 @@ import Form from '../components/styles/Form'
 
 const LoginForm = ({
   handleSubmit,
-  handleUsernameChange,
-  handlePasswordChange,
   username,
-  password
+  password,
  }) => {
  return (
    <div>
@@ -14,16 +12,15 @@ const LoginForm = ({
        <div className="form-item">
          <p>Username</p>
          <input
-           value={username}
-           onChange={handleUsernameChange}
+           {...username}
+           reset=""
          />
        </div>
        <div className="form-item">
          <p>Password</p>
          <input
-           type="password"
-           value={password}
-           onChange={handlePasswordChange}
+           {...password}
+           reset=""
          />
      </div>
       <div className="form-item">
