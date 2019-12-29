@@ -7,7 +7,7 @@ import loginService from './services/login'
 import LoginForm from './components/LoginForm'
 import styled from 'styled-components'
 import Page from './components/Page'
-import { FaPen } from 'react-icons/fa';
+import { FaPen, FaCalendarAlt, FaThumbsUp, FaComments } from 'react-icons/fa';
 
 const Button = styled.button`
   width: 100%;
@@ -34,6 +34,22 @@ const Navbar = styled.div`
     color: black;
   }
 `
+const SortContainer = styled.div`
+  display: flex;
+  justify-content: stretch;
+  align-items: center;
+  color: red;
+  .sort-btn {
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem;
+    flex-grow: 1;
+    cursor: pointer;
+    text-align: center;
+    border: 1px solid ${props => props.theme.offWhite};
+    
+  }
+`
 function App() {
   const [posts, setPosts] = useState([])
   const [title, setTitle] = useState("")
@@ -44,6 +60,9 @@ function App() {
   const [password, setPassword] = useState('') 
   const [user, setUser] = useState(null)
   const [expandForm, setExpandForm] = useState(false)
+  const [sortDate, setSortDate] = useState(false)
+  const [sortLikes, setSortLikes] = useState(false)
+  const [sortComments, setSortComments] = useState(false)
   
   useEffect(() => {
     postService.getAll()
@@ -133,6 +152,14 @@ function App() {
       })
   }
 
+  const applySort = (posts) => {
+    if (sortDate) return posts.reverse() 
+    if (sortLikes) return posts.sort( (a,b) => a.likes - b.likes)
+    if (sortComments) return posts.sort( (a,b) => a.comments.length - b.comments.length)
+    return posts
+  }
+  
+
   const loginForm = () => (
     <LoginForm
       username={username}
@@ -170,7 +197,7 @@ function App() {
       <Route path="/" render={() => 
         <div>
           <div>
-            { user && <Button onClick={() => setExpandForm(!expandForm)}><FaPen /></Button>}
+            { user && <Button onClick={() => setExpandForm(!expandForm)}>Write a post     <FaPen /></Button>}
             { user && expandForm &&
             <PostForm 
             title={title} 
@@ -180,15 +207,14 @@ function App() {
             addPost={addPost}
             />
             }
-            <div class="Filter">
-              <button>Sort by new</button>
-              <button>Sort by old</button>
-              <button>Sort by likes</button>
-              <button>Sort by most comments</button>
-            </div>
+            <SortContainer>
+              <div className="sort-btn" onClick={() => setSortDate(!sortDate)}>Sort by date <FaCalendarAlt /></div>
+              <div className="sort-btn" onClick={() => setSortLikes(!sortLikes)}>Sort by likes <FaThumbsUp /></div>
+              <div className="sort-btn" onClick={() => setSortComments(!sortComments)}>Sort by comments <FaComments /></div>
+            </SortContainer>
           </div>
           <div class="PostBoard">
-            { posts && posts.map( post => (
+            { posts && applySort(posts).map( post => (
             <Post 
             {...post} 
             addLike={addLike}
