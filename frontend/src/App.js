@@ -64,6 +64,7 @@ function App() {
   const [sortLikes, setSortLikes] = useState(false)
   const [sortComments, setSortComments] = useState(false)
   
+  console.log(sortDate, sortLikes, sortComments)
   useEffect(() => {
     postService.getAll()
     .then( data => setPosts(data))
@@ -154,9 +155,10 @@ function App() {
 
   const applySort = (posts) => {
     if (sortDate) {
-      posts.reverse()
+      posts.sort( (a,b) => new Date(a.date) - new Date(b.date))
       setSortLikes(false)
       setSortComments(false)
+
     }  
     if (sortLikes) {
       posts.sort( (a,b) => a.likes - b.likes)
