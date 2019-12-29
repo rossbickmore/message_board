@@ -3,11 +3,12 @@ import Form from '../components/styles/Form'
 
 const CommentForm = ({blogId, addComment, handleCommentChange, comment}) => (
   <Form onSubmit={(e) => addComment(e, blogId)}>
-  leave a comment
-  <div>
+  <div className="form-item">
     <input type="text" value={comment} onChange={handleCommentChange}/>
   </div>
-  <button type="submit">Submit</button>
+  <div className="form-item">
+    <button type="submit">Submit</button>
+  </div>
   </Form>
 );
 

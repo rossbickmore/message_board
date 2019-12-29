@@ -7,10 +7,11 @@ import loginService from './services/login'
 import LoginForm from './components/LoginForm'
 import styled from 'styled-components'
 import Page from './components/Page'
+import { FaPen } from 'react-icons/fa';
 
 const Button = styled.button`
   width: 100%;
-  background: red;
+  background: ${props => props.theme.red};
   color: white;
   border: 0;
   font-weight: 600;
@@ -150,7 +151,7 @@ function App() {
       <Route path="/" render={() => 
         <div>
           <div>
-            { user && <Button onClick={() => setExpandForm(!expandForm)}>Create a post!</Button>}
+            { user && <Button onClick={() => setExpandForm(!expandForm)}><FaPen /></Button>}
             { user && expandForm &&
             <PostForm 
             title={title} 
@@ -166,7 +167,7 @@ function App() {
             <Post 
             {...post} 
             key={post.id} 
-            user={user}
+            currentUser={user}
             comment={comment}
             addComment={addComment}
             handleCommentChange={({target}) => setComment(target.value)}

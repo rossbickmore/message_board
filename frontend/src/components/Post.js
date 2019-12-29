@@ -1,30 +1,53 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Comment from './Comment'
 import CommentForm from './CommentForm'
 import Card from '../components/styles/Card'
 import styled from 'styled-components'
+import { formatDate } from '../utils/dateFunctions'
 
-const Title = styled.h1`
+const Title = styled.div`
   cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 100;
 `
-const Post = ({title, content, comments, id, comment, user, addComment, handleCommentChange}) => {
-  const [expand, setExpand] = useState(true)
+
+const ContentContainer = styled.div`
+   min-height: 100px;
+   display: flex;
+   flex-direction: column;
+   align-items: space-around;
+`
+
+const Post = ({title, content, comments, id, comment, user, date, currentUser, addComment, handleCommentChange}) => {
+  console.log(user)
 
   return (
     <Card>
-      <Title onClick={() => setExpand(!expand)}>{title}</Title>
-      { !expand &&
+      <Title>
+      <h1>{title}</h1>
       <div>
-        <p>{content}</p>
-        <div class="CommentBoard">
+        <p>A post by {user.username}</p>
+        <p>{formatDate(date)}</p>
+      </div>
+      </Title>
+      <hr></hr>
+      <div>
+        <ContentContainer>
+          <p>{content}</p>
+        </ContentContainer>
+        <hr></hr>
+        <ContentContainer>
           <h2>Comments</h2>
           { comments.map( comment => (
             <Comment 
             key={comment.id}
             content={comment.content}
+            user={comment.user.username}
+            date={comment.date}
             />
           ))}
-        { user && 
+        { currentUser && 
         <CommentForm 
         addComment={addComment}
         handleCommentChange={handleCommentChange}
@@ -32,10 +55,9 @@ const Post = ({title, content, comments, id, comment, user, addComment, handleCo
         blogId={id}
         />
         }
-        { !user && <a style={{color: "grey"}} href="/login">Login to leave a comment</a> }
+        { !currentUser && <a style={{color: "grey"}} href="/login">Login to leave a comment</a> }
+        </ContentContainer>
       </div>
-      </div>
-      }
     </Card>
   )
 };

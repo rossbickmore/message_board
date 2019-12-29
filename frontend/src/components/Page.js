@@ -7,7 +7,7 @@ const theme = {
   grey: '#3A3A3A',
   lightgrey: '#E1E1E1',
   offWhite: '#EDEDED',
-  maxWidth: '1000px',
+  maxWidth: '800px',
   bs: '0 12px 24px 0 rgba(0, 0, 0, 0.09)',
 };
 
@@ -25,28 +25,37 @@ const StyledPage = styled.div`
   }
 
   p, label, input, select {
-    padding: 10px;
+    padding: 0.5rem;
     margin: 0;
     font-size: 1rem;
   }
   h1 {
-    padding: 10px;
+    padding: 0.5rem;
     margin: 0;
     font-size: 1.5rem;
   }
   h2 {
-    padding: 10px;
+    padding: 0.5rem;
     margin: 0;
     font-size: 1.25rem;
   }
   a {
     text-decoration: none;
-    padding: 10px;
+    padding: 0.5rem;
     margin: 0;
     font-size: 1rem;
     color: ${theme.black};
   }
   button { font-family: 'Roboto', sans-serif; }
+  hr {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 1px;
+    color: red;
+    font-weight: 100;
+    border-color: rgba(0, 0, 0, 0.05);
+  }
 `;
 
 const Inner = styled.div`

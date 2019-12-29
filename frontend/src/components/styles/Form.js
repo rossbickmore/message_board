@@ -6,6 +6,9 @@ const Form = styled.form`
   padding: 5px;
   line-height: 1.5;
   font-weight: 600;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
   label {
     display: block;
     margin-bottom: 1rem;
@@ -19,13 +22,28 @@ const Form = styled.form`
     border: 0;
   }
   button,
-  input[type='submit'] {
-    width: auto;
-    background: red;
+  input[type='submit']{  
+    display: inline-block;  
+    border-radius: 4px;  
+    background-color: #f4511e;  
+    border: none;  
+    background-color: ${props => props.theme.red};  
     color: white;
-    border: 0;
-    font-weight: 600;
-    padding: 0.5rem 1.2rem;
+    text-align: center;
+    font-size: 12px;
+    padding: 10px 0;  
+    width: 10%;  
+    transition: all 0.5s;  
+    cursor: pointer;  
+    }
+  .form-item {
+    margin: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  button:hover {
+    opacity: 0.5;
   }
 `;
 
