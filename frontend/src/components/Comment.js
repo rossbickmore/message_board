@@ -7,7 +7,7 @@ const CommentContainer = styled.div`
   justify-content: space-between;
   .username {
     color: ${props => props.theme.red};
-    font-weight: 800;
+    font-weight: 900;
   }
   .left {
     display: flex;
