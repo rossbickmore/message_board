@@ -60,7 +60,7 @@ function App() {
   const [password, setPassword] = useState('') 
   const [user, setUser] = useState(null)
   const [expandForm, setExpandForm] = useState(false)
-  const [sortDate, setSortDate] = useState(true)
+  const [sortDate, setSortDate] = useState(false)
   const [sortLikes, setSortLikes] = useState(false)
   const [sortComments, setSortComments] = useState(false)
   
@@ -153,9 +153,21 @@ function App() {
   }
 
   const applySort = (posts) => {
-    if (sortDate) return posts.reverse() 
-    if (sortLikes) return posts.sort( (a,b) => a.likes - b.likes)
-    if (sortComments) return posts.sort( (a,b) => a.comments.length - b.comments.length)
+    if (sortDate) {
+      posts.reverse()
+      setSortLikes(false)
+      setSortComments(false)
+    }  
+    if (sortLikes) {
+      posts.sort( (a,b) => a.likes - b.likes)
+      setSortDate(false)
+      setSortComments(false)
+    } 
+    if (sortComments) {
+      posts.sort( (a,b) => a.comments.length - b.comments.length)
+      setSortDate(false)
+      setSortLikes(false)
+    }
     return posts
   }
   

@@ -1,15 +1,15 @@
 import React from 'react';
 import Form from '../components/styles/Form'
 
-const PostForm = ({title, content, addPost}) => (
+const PostForm = ({title, onTitleChange, onContentChange, content, addPost}) => (
     <Form onSubmit={addPost}>
       <div class="form-item">
         <p>Title</p>
-        <input {...title} reset=""/>
+        <input value={title} onChange={onTitleChange}/>
       </div>
       <div class="form-item">
         <p>Content</p>
-        <textarea {...content} reset=""/>
+        <textarea value={content} onChange={onContentChange}/>
       </div>
       <div class="form-item">
         <button type="submit">Submit</button>

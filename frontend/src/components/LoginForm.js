@@ -5,6 +5,8 @@ const LoginForm = ({
   handleSubmit,
   username,
   password,
+  handleUsernameChange,
+  handlePasswordChange
  }) => {
  return (
    <div>
@@ -12,15 +14,15 @@ const LoginForm = ({
        <div className="form-item">
          <p>Username</p>
          <input
-           {...username}
-           reset=""
+           value={username}
+           onChange={handleUsernameChange}
          />
        </div>
        <div className="form-item">
          <p>Password</p>
          <input
-           {...password}
-           reset=""
+           value={password}
+           onChange={handlePasswordChange}
          />
      </div>
       <div className="form-item">
