@@ -11,7 +11,7 @@ The webapp uses: React, Node (REST API Backend), MongoDB databse.
 
 run `npm start` in the console
 
-This uns the app in the development mode.<br />
+This runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ## Learn More
