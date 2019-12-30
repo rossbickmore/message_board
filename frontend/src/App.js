@@ -93,7 +93,6 @@ function App() {
       setUser(user)
       setUsername('')
       setPassword('')
-
     } catch (exception) {
       setErrorMessage('Wrong credentials')
       setTimeout(() => {

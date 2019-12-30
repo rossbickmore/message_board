@@ -8,7 +8,7 @@ const SignUpForm = ({ handleLogin }) => {
   const [username, setUsername] = useState('')
   const [name, setName] = useState('')
   const [signedUp, setSignedUp] = useState(false)
-  const [errorMessage, setErrorMessage] = useState(null)
+  const [errorMessage, setErrorMessage] = useState("")
 
   const handleSignUp = async (event) => {
     event.preventDefault()
@@ -20,6 +20,7 @@ const SignUpForm = ({ handleLogin }) => {
       setPassword('')
       setName('')
       setSignedUp(true)
+      handleLogin()
     } catch (exception) {
       setErrorMessage('Invalid details')
       setTimeout(() => {
@@ -40,13 +41,6 @@ const SignUpForm = ({ handleLogin }) => {
         />
       </div>
       <div className="form-item">
-        Full ame
-        <input
-          value={name}
-          onChange={({ target }) => setName(target.value)}
-        />
-      </div>
-      <div className="form-item">
         Password
         <input
           type="password"
@@ -61,7 +55,7 @@ const SignUpForm = ({ handleLogin }) => {
 
  return (
    <div>
-     {signedUp ? <Redirect to='/login' /> : signUpForm()}
+     {signedUp ? <Redirect to='/' /> : signUpForm()}
    </div>
  )
 }
