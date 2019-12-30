@@ -1,7 +1,7 @@
 The web application, FlipPad, provides a platform for users to share posts and discuss with other users
 through commenting on posts.
 
-Visit flippads.herokuapp.com
+Visit www.flippads.herokuapp.com
 
 ## Tools and technologies
 
