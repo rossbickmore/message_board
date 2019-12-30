@@ -1,9 +1,0 @@
-POST http://localhost:3001/api/posts
-Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImlhbjEyMyIsImlkIjoiNWUwNzNlNGQ5ZjI2NDMwY2Y2NzZjNTMzIiwiaWF0IjoxNTc3NTMzNTAzfQ.DbRG8DIENwAt4q5cyelzf21e91_ZJcHKHh7P4yKHphc
-
-{
-  "content": "Something interesting",
-  "title": "this is my blog",
-  "userId": "5e073e4d9f26430cf676c533"
-}
