@@ -5,13 +5,7 @@ Visit flippads.herokuapp.com/
 
 ## Tools and technologies
 
-The webapp uses:
-  Front End:
-    React 
-  API Back End: 
-    Node (preferred)
-  Database: 
-    MongoDB 
+The webapp uses: React, Node (REST API Backend), MongoDB databse.
 
 ### Use locally
 
