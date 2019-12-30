@@ -21,6 +21,7 @@ const LoginForm = ({
        <div className="form-item">
          <p>Password</p>
          <input
+            type="password"
            value={password}
            onChange={handlePasswordChange}
          />

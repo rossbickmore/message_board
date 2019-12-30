@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import signUpService from '../services/signUp'
 import { Redirect } from 'react-router-dom';
+import Form from '../components/styles/Form'
 
 const SignUpForm = ({ handleLogin }) => {
   const [password, setPassword] = useState('')
@@ -30,23 +31,23 @@ const SignUpForm = ({ handleLogin }) => {
   const signUpForm = () => (
     <div>
     <h2>SignUp</h2>
-    <form onSubmit={handleSignUp}>
-      <div>
-        create username
+    <Form onSubmit={handleSignUp}>
+      <div className="form-item">
+        Username
         <input
           value={username}
           onChange={({ target }) => setUsername(target.value)}
         />
       </div>
-      <div>
-        create name
+      <div className="form-item">
+        Full ame
         <input
           value={name}
           onChange={({ target }) => setName(target.value)}
         />
       </div>
-      <div>
-        create password
+      <div className="form-item">
+        Password
         <input
           type="password"
           value={password}
@@ -54,7 +55,7 @@ const SignUpForm = ({ handleLogin }) => {
         />
     </div>
       <button type="submit">login</button>
-    </form>
+    </Form>
   </div>
   )
 
