@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
+import React, { Component } from 'react'
+import styled, { ThemeProvider, createGlobalStyle } from 'styled-components'
 
 const theme = {
   red: '#FF0000',
@@ -8,7 +8,7 @@ const theme = {
   offWhite: '#EDEDED',
   maxWidth: '800px',
   bs: '0 12px 24px 0 rgba(0, 0, 0, 0.09)',
-};
+}
 
 const StyledPage = styled.div`
   background: white;
@@ -55,24 +55,24 @@ const StyledPage = styled.div`
     font-weight: 100;
     border-color: rgba(0, 0, 0, 0.05);
   }
-`;
+`
 
 const Inner = styled.div`
   max-width: ${props => props.theme.maxWidth};
   margin: 0 auto;
   padding: 2rem;
-`;
+`
 
 class Page extends Component {
   render() {
     return (
-        <ThemeProvider theme={theme}>
-          <StyledPage>
-            <Inner>{this.props.children}</Inner>
-          </StyledPage>
-        </ThemeProvider>
-    );
+      <ThemeProvider theme={theme}>
+        <StyledPage>
+          <Inner>{this.props.children}</Inner>
+        </StyledPage>
+      </ThemeProvider>
+    )
   }
 }
 
-export default Page;
+export default Page

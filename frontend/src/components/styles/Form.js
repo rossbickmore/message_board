@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes } from 'styled-components'
 
 const Form = styled.form`
   background: rgba(0, 0, 0, 0.02);
@@ -45,6 +45,6 @@ const Form = styled.form`
   button:hover {
     opacity: 0.5;
   }
-`;
+`
 
-export default Form;
+export default Form

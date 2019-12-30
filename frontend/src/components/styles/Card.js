@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 const Card = styled.div`
   background: white;
@@ -9,6 +9,6 @@ const Card = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-`;
+`
 
-export default Card;
+export default Card

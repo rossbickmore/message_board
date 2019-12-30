@@ -1,6 +1,6 @@
 const baseUrl = '/api/posts'
 
-let token = null 
+let token = null
 
 const setToken = newToken => {
   token = `bearer ${newToken}`
@@ -15,7 +15,7 @@ const getAll = async () => {
 const create = async newObject => {
   const config = {
     method: 'POST',
-    headers: { Authorization: token, 'Content-Type': 'application/json;charset=utf-8'},
+    headers: { Authorization: token, 'Content-Type': 'application/json;charset=utf-8' },
     body: JSON.stringify(newObject)
   }
   console.log(config)
@@ -32,7 +32,7 @@ const update = async (id, newObject) => {
   }
   const response = await fetch(`${ baseUrl }/${id}`,config)
   const result = await response.json()
-  console.log(result, "result")
+  console.log(result, 'result')
   return result
 }
 
@@ -40,7 +40,7 @@ const update = async (id, newObject) => {
 const createComment = async (id, newObject) => {
   const config = {
     method: 'POST',
-    headers: { Authorization: token, 'Content-Type': 'application/json;charset=utf-8'},
+    headers: { Authorization: token, 'Content-Type': 'application/json;charset=utf-8' },
     body: JSON.stringify(newObject)
   }
   console.log(config)
@@ -50,4 +50,4 @@ const createComment = async (id, newObject) => {
   return result
 }
 
-export default { getAll, create, update, createComment, setToken } 
+export default { getAll, create, update, createComment, setToken }

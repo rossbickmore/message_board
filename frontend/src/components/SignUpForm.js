@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import signUpService from '../services/signUp'
-import { Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom'
 import Form from '../components/styles/Form'
 
 const SignUpForm = ({ handleLogin }) => {
@@ -8,7 +8,7 @@ const SignUpForm = ({ handleLogin }) => {
   const [username, setUsername] = useState('')
   const [name, setName] = useState('')
   const [signedUp, setSignedUp] = useState(false)
-  const [errorMessage, setErrorMessage] = useState("")
+  const [errorMessage, setErrorMessage] = useState('')
 
   const handleSignUp = async (event) => {
     event.preventDefault()
@@ -31,33 +31,33 @@ const SignUpForm = ({ handleLogin }) => {
 
   const signUpForm = () => (
     <div>
-    <h2>SignUp</h2>
-    <Form onSubmit={handleSignUp}>
-      <div className="form-item">
+      <h2>SignUp</h2>
+      <Form onSubmit={handleSignUp}>
+        <div className="form-item">
         Username
-        <input
-          value={username}
-          onChange={({ target }) => setUsername(target.value)}
-        />
-      </div>
-      <div className="form-item">
+          <input
+            value={username}
+            onChange={({ target }) => setUsername(target.value)}
+          />
+        </div>
+        <div className="form-item">
         Password
-        <input
-          type="password"
-          value={password}
-          onChange={({ target }) => setPassword(target.value)}
-        />
+          <input
+            type="password"
+            value={password}
+            onChange={({ target }) => setPassword(target.value)}
+          />
+        </div>
+        <button type="submit">login</button>
+      </Form>
     </div>
-      <button type="submit">login</button>
-    </Form>
-  </div>
   )
 
- return (
-   <div>
-     {signedUp ? <Redirect to='/' /> : signUpForm()}
-   </div>
- )
+  return (
+    <div>
+      {signedUp ? <Redirect to='/' /> : signUpForm()}
+    </div>
+  )
 }
 
 export default SignUpForm
