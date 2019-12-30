@@ -5,6 +5,7 @@ import Post from './components/Post'
 import postService from './services/posts'
 import loginService from './services/login'
 import LoginForm from './components/LoginForm'
+import SignUpForm from './components/SignUpForm'
 import styled from 'styled-components'
 import Page from './components/Page'
 import { FaPen, FaCalendarAlt, FaThumbsUp, FaComments } from 'react-icons/fa';
@@ -208,6 +209,7 @@ function App() {
       <Route path="/login" render={() =>
         user ? <Redirect to="/"/> : loginForm()}
       />
+      <Route path="/signup" render={() => <SignUpForm handleLogin={handleLogin}/>}/>
       <Route path="/" render={() => 
         <div>
           <div>
